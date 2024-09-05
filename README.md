@@ -48,6 +48,7 @@ response = await sdk.add_context_async( project_id=1, context="Sample context", 
 
 ```python
 from feedbackIntelligence.schemas import Message, Context, Feedback
+# Make sure to use the exact date format that is used in the example
 
 messages = [
     Message(role='human', text='Hello', propmt='test', 
@@ -84,3 +85,6 @@ response = sdk.add_feedback( project_id=1, message="Great service", source="emai
 response = await sdk.add_feedback_async( project_id=1, message="Great service", source="survey")
 ```
 
+visit this links to see examples
+* [SKD](https://colab.research.google.com/drive/1p6ZkAj0zQoKtlv4FETE5Mrb4PXn-IhuA?usp=drive_link)
+* [API](https://drive.google.com/file/d/1cwjbqVIAFidlbhYv8YA36P6PDhpufT9c/view?usp=drive_link)

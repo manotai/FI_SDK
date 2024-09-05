@@ -26,7 +26,7 @@ class FeedbackIntelligenceSDK:
         :param context_id: Optional context ID.
         :return: Response from the API.
         """
-        url = f"{self.__base_url}/data/{ project_id}/context/add"
+        url = f"{self.__base_url}/data/{project_id}/context/add"
         payload = {"context": context}
         if context_id is not None:
             payload["id"] = context_id
@@ -36,7 +36,7 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    async def add_context_async(self,  project_id: int, context: str, context_id: Optional[int] = None) -> Dict:
+    async def add_context_async(self, project_id: int, context: str, context_id: Optional[int] = None) -> Dict:
         """
         Add context to the database for later use in user messages (asynchronous).
 
@@ -45,7 +45,7 @@ class FeedbackIntelligenceSDK:
         :param context_id: Optional context ID.
         :return: Response from the API.
         """
-        url = f"{self.__base_url}/data/{ project_id}/context/add"
+        url = f"{self.__base_url}/data/{project_id}/context/add"
         payload = {"context": context}
         if context_id is not None:
             payload["id"] = context_id
@@ -55,7 +55,7 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    def add_chat(self,  project_id: int, chat_id: int, messages: List[Message], user_id: Optional[int] = None,
+    def add_chat(self, project_id: int, chat_id: int, messages: List[Message], user_id: Optional[int] = None,
                  version: Optional[str] = None) -> Dict:
         """
         Add chat data to the database (synchronous).
@@ -67,7 +67,7 @@ class FeedbackIntelligenceSDK:
         :param version: Optional version of the chat.
         :return: Response from the API.
         """
-        url = f"{self.__base_url}/data/{ project_id}/chat/add"
+        url = f"{self.__base_url}/data/{project_id}/chat/add"
         payload = {
             "chat_id": chat_id,
             "messages": [message.to_dict() for message in messages],
@@ -82,7 +82,7 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    async def add_chat_async(self,  project_id: int, chat_id: int, messages: List[Message],
+    async def add_chat_async(self, project_id: int, chat_id: int, messages: List[Message],
                              user_id: Optional[int] = None,
                              version: Optional[str] = "1.0") -> Dict:
         """
@@ -95,7 +95,7 @@ class FeedbackIntelligenceSDK:
         :param version: Optional version of the chat.
         :return: Response from the API.
         """
-        url = f"{self.__base_url}/data/{ project_id}/chat/add"
+        url = f"{self.__base_url}/data/{project_id}/chat/add"
         payload = {
             "chat_id": chat_id,
             "messages": [message.to_dict() for message in messages],
@@ -111,7 +111,7 @@ class FeedbackIntelligenceSDK:
             print('done!')
             return response.json()
 
-    def add_feedback(self,  project_id: int, message: str, source: str, user_id: Optional[int] = None,
+    def add_feedback(self, project_id: int, message: str, source: str, user_id: Optional[int] = None,
                      chat_id: Optional[int] = None, date: Optional[str] = None) -> Dict:
         """
         Add feedback data to the database (synchronous).
@@ -124,7 +124,7 @@ class FeedbackIntelligenceSDK:
         :param date: Optional date the feedback was given.
         :return: Response from the API.
         """
-        url = f"{self.__base_url}/data/{ project_id}/feedback/add"
+        url = f"{self.__base_url}/data/{project_id}/feedback/add"
         payload = {
             "message": message,
             "source": source,
@@ -141,7 +141,7 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    async def add_feedback_async(self,  project_id: int, message: str, source: str, user_id: Optional[int] = None,
+    async def add_feedback_async(self, project_id: int, message: str, source: str, user_id: Optional[int] = None,
                                  chat_id: Optional[int] = None, date: Optional[str] = None) -> Dict:
         """
         Add feedback data to the database (asynchronous).
@@ -154,7 +154,7 @@ class FeedbackIntelligenceSDK:
         :param date: Optional date the feedback was given.
         :return: Response from the API.
         """
-        url = f"{self.__base_url}/data/{ project_id}/feedback/add"
+        url = f"{self.__base_url}/data/{project_id}/feedback/add"
         payload = {
             "message": message,
             "source": source,

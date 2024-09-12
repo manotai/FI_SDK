@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="feedbackIntelligence",
-    version="0.2.2",
+    version="0.2.4",
     author="Tigran Kostanyan",
     author_email="tigran@manot.ai",
     description="An SDK for Feedback Intelligence data insertion",
@@ -18,7 +18,6 @@ setup(
         'httpx',
         'pydantic',
         'boto3',
-        'json'
     ],
     python_requires='>=3.6',
 )

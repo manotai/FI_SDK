@@ -1,6 +1,9 @@
 import httpx
 from typing import Optional, List, Dict
-from feedbackIntelligence.schemas import Message
+
+import requests
+
+from feedbackIntelligence.schemas import Context, Message
 
 
 class FeedbackIntelligenceSDK:
@@ -170,3 +173,67 @@ class FeedbackIntelligenceSDK:
             response = await client.post(url, json=payload, headers=self.__headers)
             response.raise_for_status()
             return response.json()
+
+
+class BedrockWrapper:
+    def __init__(self, bedrock_client, fi_api_key):
+        """
+                A wrapper for interacting with the Bedrock client and sending chat data to a custom endpoint via the FeedbackIntelligenceSDK.
+
+                :param bedrock_client: An instance of the Bedrock client used to interact with Bedrock models.
+                :param fi_api_key: The API key for authenticating with FeedbackIntelligenceSDK.
+        """
+        self.bedrock_client = bedrock_client
+        self.__sdk = FeedbackIntelligenceSDK(fi_api_key)
+
+    def __send_to_FI(self, context: str, prompt: str, query: str, answer: str, chat_id: int,
+                     project_id: int):
+
+        """
+            Sends chat data to Feedback Intelligence.
+
+            :param context: The context of the conversation or chat.
+            :param prompt: The prompt that initiated the query.
+            :param query: The human user's query or input.
+            :param answer: The AI's response to the query.
+            :param chat_id: The ID of the chat in which the query and answer are exchanged.
+            :param project_id: The ID of the project to which the chat belongs.
+            :return: None.
+            :raises RequestException: If an error occurs while sending data to the custom endpoint.
+        """
+        try:
+            messages = [
+                Message(role='human', text=query, prompt=prompt,
+                        context=Context(text=context)),
+                Message(role='ai', text=answer)]
+            for message in messages:
+                print(message.to_dict())
+            response = self.__sdk.add_chat(project_id=project_id, chat_id=chat_id, messages=messages)
+        except requests.exceptions.RequestException as e:
+            print(f"Error sending data to custom endpoint: {e}")
+
+    def invoke_model(self, *, context: str, prompt: str, query: str, chat_id: int, project_id: int, get_resp: callable,
+                     **kwargs, ):
+        """
+            Queries the Bedrock client for an AI-generated response and sends the chat data to a custom endpoint.
+
+            :param context: The context of the conversation or chat.
+            :param prompt: The prompt that initiated the query.
+            :param query: The human user's query or input.
+            :param chat_id: The ID of the chat in which the query and answer are exchanged.
+            :param project_id: The ID of the project to which the chat belongs.
+            :param get_resp: A callable that processes the Bedrock response to extract the AI-generated answer.
+            :param kwargs: Additional keyword arguments to pass to the Bedrock client's `invoke_model` method.
+            :return: The response from the Bedrock client.
+        """
+
+        response = self.bedrock_client.invoke_model(
+            **kwargs
+        )
+
+        answer = get_resp(response)
+
+        self.__send_to_FI(context=context, prompt=prompt, query=query, answer=answer, chat_id=chat_id,
+                          project_id=project_id)
+
+        return response

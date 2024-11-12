@@ -13,7 +13,7 @@ class FeedbackIntelligenceSDK:
 
         :param api_key: Optional API key for authentication.
         """
-        self.__base_url = "https://data.feedbackintelligence.ai"
+        self.__base_url = "https://api.feedbackintelligence.ai"
         self.__headers = {
             'Content-Type': 'application/json',
         }

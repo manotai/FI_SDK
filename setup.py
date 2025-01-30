@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="feedbackIntelligence",
-    version="0.2.5",
+    version="0.2.6",
     author="Tigran Kostanyan",
     author_email="tigran@manot.ai",
     description="An SDK for Feedback Intelligence data insertion",

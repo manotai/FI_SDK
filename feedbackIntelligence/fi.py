@@ -7,13 +7,13 @@ from feedbackIntelligence.schemas import Context, Message
 
 
 class FeedbackIntelligenceSDK:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, base_url: str = "https://api.feedbackintelligence.ai"):
         """
         Initialize the SDK with the base URL of the API and an optional API key for authentication.
 
         :param api_key: Optional API key for authentication.
         """
-        self.__base_url = "https://api.feedbackintelligence.ai"
+        self.__base_url = base_url
         self.__headers = {
             'Content-Type': 'application/json',
         }

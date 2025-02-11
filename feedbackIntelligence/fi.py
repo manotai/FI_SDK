@@ -58,7 +58,7 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    def add_chat(self, project_id: int, chat_id: int, messages: List[Message], user_id: Optional[int] = None,
+    def add_chat(self, project_id: int, chat_id: str, messages: List[Message], user_id: Optional[str] = None,
                  version: Optional[str] = None) -> Dict:
         """
         Add chat data to the database (synchronous).
@@ -85,8 +85,8 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    async def add_chat_async(self, project_id: int, chat_id: int, messages: List[Message],
-                             user_id: Optional[int] = None,
+    async def add_chat_async(self, project_id: int, chat_id: str, messages: List[Message],
+                             user_id: Optional[str] = None,
                              version: Optional[str] = "1.0") -> Dict:
         """
         Add chat data to the database (asynchronous).
@@ -114,8 +114,8 @@ class FeedbackIntelligenceSDK:
             print('done!')
             return response.json()
 
-    def add_feedback(self, project_id: int, message: str, source: str, user_id: Optional[int] = None,
-                     chat_id: Optional[int] = None, date: Optional[str] = None) -> Dict:
+    def add_feedback(self, project_id: int, message: str, source: str, user_id: Optional[str] = None,
+                     chat_id: Optional[str] = None, date: Optional[str] = None) -> Dict:
         """
         Add feedback data to the database (synchronous).
 
@@ -144,8 +144,8 @@ class FeedbackIntelligenceSDK:
             response.raise_for_status()
             return response.json()
 
-    async def add_feedback_async(self, project_id: int, message: str, source: str, user_id: Optional[int] = None,
-                                 chat_id: Optional[int] = None, date: Optional[str] = None) -> Dict:
+    async def add_feedback_async(self, project_id: int, message: str, source: str, user_id: Optional[str] = None,
+                                 chat_id: Optional[str] = None, date: Optional[str] = None) -> Dict:
         """
         Add feedback data to the database (asynchronous).
 
@@ -186,7 +186,7 @@ class BedrockWrapper:
         self.bedrock_client = bedrock_client
         self.__sdk = FeedbackIntelligenceSDK(fi_api_key)
 
-    def __send_to_FI(self, context: str, prompt: str, query: str, answer: str, chat_id: int,
+    def __send_to_FI(self, context: str, prompt: str, query: str, answer: str, chat_id: str,
                      project_id: int):
 
         """
@@ -212,7 +212,7 @@ class BedrockWrapper:
         except requests.exceptions.RequestException as e:
             print(f"Error sending data to custom endpoint: {e}")
 
-    def invoke_model(self, *, context: str, prompt: str, query: str, chat_id: int, project_id: int, get_resp: callable,
+    def invoke_model(self, *, context: str, prompt: str, query: str, chat_id: str, project_id: int, get_resp: callable,
                      **kwargs, ):
         """
             Queries the Bedrock client for an AI-generated response and sends the chat data to a custom endpoint.
